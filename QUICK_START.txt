@@ -1,0 +1,118 @@
+================================================================================
+S&P 500 STOCK PRICE VS MOVING AVERAGE - QUICK START GUIDE
+================================================================================
+
+RUN THE PROGRAM:
+    python sp500_charts_generator_optimized.py
+
+EXPECTED RUNTIME:
+    20-40 minutes (all 503 S&P 500 stocks)
+
+OUTPUT FILE:
+    sp500_stock_analysis.html
+
+RESUME IF INTERRUPTED:
+    Just run the same command again - it will resume automatically
+
+================================================================================
+INTERACTIVE HTML FEATURES
+================================================================================
+
+SEARCH:
+    - Type ticker or company name in search box
+    - Examples: "AAPL", "Apple", "Microsoft", "tech"
+
+SORT:
+    - Sort A-Z: Alphabetically by company name
+    - Sort by Market Cap: Largest to smallest (default)
+
+FILTER BY SECTOR (MULTI-SELECT):
+    - Click sectors to filter (e.g., "Information Technology")
+    - Click multiple sectors at once (green = selected)
+    - Click "All Sectors" to show everything
+
+COMBINE FEATURES:
+    1. Select "Information Technology" + "Financials"
+    2. Search "apple"
+    3. Sort A-Z
+
+================================================================================
+REQUIREMENTS
+================================================================================
+
+SOFTWARE:
+    - Python 3.8+
+    - Bloomberg Terminal (running and logged in)
+    - 8 simultaneous Bloomberg API connections
+
+PACKAGES:
+    pip install -r requirements.txt
+
+HARDWARE:
+    - CPU: 4+ cores (8+ ideal)
+    - RAM: 8GB min (16GB recommended)
+    - Disk: 500MB free
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+BLOOMBERG SESSION LIMIT:
+    Edit line 791: num_workers = min(4, os.cpu_count() or 4)
+    (Change from 8 to 4 workers)
+
+HIGH MEMORY USAGE:
+    Reduce workers (see above)
+
+PROGRAM INTERRUPTED:
+    Run again - resumes from checkpoint.json
+
+CHARTS NOT DISPLAYING:
+    - Use modern browser (Chrome, Firefox, Edge)
+    - Check internet connection (needs Plotly CDN)
+
+================================================================================
+WHAT IT DOES
+================================================================================
+
+LIQUIDITY-BASED MOVING AVERAGE:
+    - Not fixed 50-day or 200-day
+    - Dynamic lookback based on: Float ÷ AvgVolume
+    - Liquid stocks: Shorter lookback (more responsive)
+    - Illiquid stocks: Longer lookback (smoother)
+
+CHARTS SHOW:
+    - Blue line: Stock price (daily)
+    - Red line: Dynamic moving average
+    - Last 5 years of data
+    - No title (clean look)
+    - Company name + market cap in header
+
+DATA FROM BLOOMBERG:
+    - 503 S&P 500 stocks
+    - 10 years historical data
+    - Price, market cap, float, volume
+    - Company name and GICS sector
+
+================================================================================
+FILE STRUCTURE
+================================================================================
+
+sp500_charts_generator_optimized.py    Main program
+requirements.txt                        Python dependencies
+README.md                              Full documentation
+Stock Price vs Moving Average.xlsx     Original Excel reference
+checkpoint.json                        Auto-generated (resume)
+sp500_stock_analysis.html             Generated output
+
+================================================================================
+READY TO USE!
+================================================================================
+
+1. Ensure Bloomberg Terminal is running and logged in
+2. Run: python sp500_charts_generator_optimized.py
+3. Wait 20-40 minutes
+4. Open sp500_stock_analysis.html in your browser
+5. Use search, sort, and filter features to explore
+
+For full documentation, see README.md

@@ -1,0 +1,8 @@
+{
+  "portfolios": [
+    {
+      "name": "Tech Leaders",
+      "tickers": ["AAPL", "MSFT", "NVDA", "GOOGL", "META"]
+    }
+  ]
+}
