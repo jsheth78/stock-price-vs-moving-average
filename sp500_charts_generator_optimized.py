@@ -2082,10 +2082,30 @@ def main():
             os.remove(CHECKPOINT_FILE)
             print("Checkpoint file cleaned up")
 
-        # Open the HTML file in the default browser
-        print("\nOpening HTML file in browser...")
-        webbrowser.open('file://' + os.path.abspath(output_file))
-        print("[OK] HTML file opened in browser")
+        # Push updated HTML to GitHub
+        print("\nPushing updated HTML to GitHub...")
+        import subprocess
+        try:
+            subprocess.run(["git", "add", "sp500_stock_analysis.html"], cwd=script_dir, check=True, capture_output=True)
+            subprocess.run(
+                ["git", "commit", "-m", f"Update charts {datetime.now().strftime('%Y-%m-%d %H:%M')}"],
+                cwd=script_dir, check=True, capture_output=True
+            )
+            subprocess.run(["git", "push"], cwd=script_dir, check=True, capture_output=True)
+            print("[OK] Pushed to GitHub")
+        except subprocess.CalledProcessError as e:
+            stderr = e.stderr.decode() if e.stderr else ""
+            if "nothing to commit" in stderr or "nothing added" in stderr:
+                print("[OK] No changes to push")
+            else:
+                print(f"[WARN] Git push failed: {stderr}")
+                print("Opening local file instead...")
+                webbrowser.open('file://' + os.path.abspath(output_file))
+
+        # Open GitHub Pages website
+        print("\nOpening GitHub Pages website...")
+        webbrowser.open("https://jsheth78.github.io/stock-price-vs-moving-average/sp500_stock_analysis.html")
+        print("[OK] Website opened in browser")
         print("\n" + "="*80)
         print("ANALYSIS COMPLETE!")
         print("="*80)
